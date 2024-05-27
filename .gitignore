@@ -1,0 +1,9 @@
+cmake-build-debug
+build
+.idea
+*.dll
+!allegro_monolith-5.2.dll
+log.txt
+Makefile
+.vscode/
+.DS_Store
