@@ -12,10 +12,10 @@
 #include "Enemy/Enemy.hpp"
 
 const int WizardTurret::Price = 300;
-const int WizardTurret::Radius = 250;
-const float WizardTurret::Damage = 1;
+const int WizardTurret::Radius = 150;
+const float WizardTurret::Damage = 0.5;
 WizardTurret::WizardTurret(float x, float y) :
-	Turret("play/tower-base.png", "play/wizard.png", x, y, 150, Price, 0.8) {
+	Turret("play/tower-base.png", "play/wizard.png", x, y, Radius, Price, 0.5) {
 	Anchor.x = 0.5;
 	Anchor.y = 0.5;
 }
@@ -23,7 +23,10 @@ void WizardTurret::CreateBullet() {
 	for (auto &it : getPlayScene()->EnemyGroup->GetObjects()) {
 		Enemy* enemy = dynamic_cast<Enemy*>(it);
 		if (!enemy->Visible) continue;
-		if (inRadius(enemy->Position)) enemy->Hit(Damage);
+		if (inRadius(enemy->Position)) {
+			enemy->Hit(Damage);
+			enemy->WizardOeExplode();
+		}
 	}
 }
 bool WizardTurret::inRadius(Engine::Point a) {
