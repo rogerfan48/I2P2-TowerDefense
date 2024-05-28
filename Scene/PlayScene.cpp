@@ -26,6 +26,8 @@
 #include "Enemy/TankEnemy.hpp"
 #include "Turret/TurretButton.hpp"
 #include "Scene/ScoreboardScene.hpp"
+#include "Enemy/Tk1Enemy.hpp"
+#include "Enemy/Tk2Enemy.hpp"
 
 bool PlayScene::DebugMode = false;
 const std::vector<Engine::Point> PlayScene::directions = { Engine::Point(-1, 0), Engine::Point(0, -1), Engine::Point(1, 0), Engine::Point(0, 1) };
@@ -155,6 +157,12 @@ void PlayScene::Update(float deltaTime) {
         // TODO: [CUSTOM-ENEMY]: You need to modify 'Resource/enemy1.txt', or 'Resource/enemy2.txt' to spawn the 4th enemy.
         //         The format is "[EnemyId] [TimeDelay] [Repeat]".
         // TODO: [CUSTOM-ENEMY]: Enable the creation of the enemy.
+		case 4:
+			EnemyGroup->AddNewObject(enemy = new Tk1Enemy(SpawnCoordinate.x, SpawnCoordinate.y));
+			break;
+		case 5:
+			EnemyGroup->AddNewObject(enemy = new Tk2Enemy(SpawnCoordinate.x, SpawnCoordinate.y));
+			break;
 		default:
 			continue;
 		}

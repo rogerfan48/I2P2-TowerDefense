@@ -96,6 +96,10 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/ScoreboardScene.hpp
         Turret/WizardTurret.cpp
         Turret/WizardTurret.hpp
+        Enemy/Tk1Enemy.cpp
+        Enemy/Tk1Enemy.hpp
+        Enemy/Tk2Enemy.cpp
+        Enemy/Tk2Enemy.hpp
 #        UI/Component/TextInput.cpp
 #        UI/Component/TextInput.hpp
 )
