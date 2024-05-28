@@ -19,6 +19,7 @@
 #include "Turret/MissileTurret.hpp"
 #include "Turret/WizardTurret.hpp"
 #include "Turret/GunTurret.hpp"
+#include "Turret/Shovel.hpp"
 #include "UI/Animation/Plane.hpp"
 #include "Enemy/PlaneEnemy.hpp"
 #include "PlayScene.hpp"
@@ -221,6 +222,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 	const int y = my / BlockSize;
 	if (button & 1) {
 		if (mapState[y][x] != TILE_OCCUPIED) {
+			if (preview->GetPrice() == 0) return;
 			if (!preview)
 				return;
 			// Check if valid.
@@ -249,6 +251,19 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 
 			mapState[y][x] = TILE_OCCUPIED;
 			OnMouseMove(mx, my);
+		} else if (preview && preview->GetPrice() == 0) {
+			preview->Position.x = x * BlockSize + BlockSize / 2;
+			preview->Position.y = y * BlockSize + BlockSize / 2;
+			for (auto &it : TowerGroup->GetObjects()) {
+				Turret* itt = dynamic_cast<Turret*>(it);
+				if (itt->Position == preview->Position) {
+					EarnMoney(static_cast<int>(0.75*itt->GetPrice()));
+					TowerGroup->RemoveObject(itt->GetObjectIterator());
+					break;
+				}
+			}
+			UIGroup->RemoveObject(preview->GetObjectIterator());
+			preview = nullptr;
 		}
 	}
 }
@@ -280,6 +295,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 	else if (keyCode == ALLEGRO_KEY_E) UIBtnClicked(2);		// ? Hotkey for MissileTurret.
 	else if (keyCode == ALLEGRO_KEY_R) UIBtnClicked(3);	// TODO: [CUSTOM-TURRET]: Make specific key to create the turret.
 	else if (keyCode == ALLEGRO_KEY_A) UIBtnClicked(4);
+	else if (keyCode == ALLEGRO_KEY_S) UIBtnClicked(5);
 	else if (keyCode >= ALLEGRO_KEY_0 && keyCode <= ALLEGRO_KEY_9) {
 		// Hotkey for Speed up.
 		SpeedMult = keyCode - ALLEGRO_KEY_0;
@@ -397,6 +413,15 @@ void PlayScene::ConstructUI() {
 	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(GunTurret::Price), "pirulen.ttf", 20, 1294 + 2, 270 + 62, 100, 100, 100));
 	UIGroup->AddNewObject(new Engine::Label("A", "pirulen.ttf", 24, 1294+2, 270+2, 255, 0, 0, 255, 0.5, 0.5));
 
+	btn = new TurretButton("play/floor.png", "play/dirt.png",
+		Engine::Sprite("play/shovel.png", 1370, 270, 0, 0, 0, 0),
+		Engine::Sprite("play/shovel.png", 1370, 270, 0, 0, 0, 0)
+		, 1370, 270, Shovel::Price);
+	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 5));
+	UIGroup->AddNewControlObject(btn);
+	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(Shovel::Price), "pirulen.ttf", 20, 1370 + 15, 270 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("S", "pirulen.ttf", 24, 1370+2, 270+2, 255, 0, 0, 255, 0.5, 0.5));
+
 	int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
 	int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
 	int shift = 135 + 25;
@@ -427,6 +452,8 @@ void PlayScene::UIBtnClicked(int id) {
 		preview = new WizardTurret(0, 0);
 	else if (id == 4 && money >= GunTurret::Price)
 		preview = new GunTurret(0, 0);
+	else if (id == 5 && money >= Shovel::Price)
+		preview = new Shovel(0, 0);
 	if (!preview)
 		return;
 	preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();
