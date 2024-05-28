@@ -55,7 +55,7 @@ void WinScene::OnKeyDown(int keyCode) {
 	if (((keyCode >= ALLEGRO_KEY_A && keyCode <= ALLEGRO_KEY_9)) && newRecord.name.size()<12) {
 		newRecord.name += (al_keycode_to_name(keyCode));
 	} else if (keyCode == ALLEGRO_KEY_BACKSPACE) {
-		newRecord.name.pop_back();
+		if (!newRecord.name.empty())newRecord.name.pop_back();
 	} else if (keyCode == ALLEGRO_KEY_ENTER) {
 		if (newRecord.name == "") newRecord.name = "Undefined";
 		Engine::GameEngine::GetInstance().ChangeScene("scoreboard");
