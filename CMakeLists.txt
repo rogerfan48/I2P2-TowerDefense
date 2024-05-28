@@ -100,6 +100,8 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Turret/GunTurret.hpp
         Turret/Shovel.cpp
         Turret/Shovel.hpp
+        Turret/Bomb.cpp
+        Turret/Bomb.hpp
         Enemy/Tk1Enemy.cpp
         Enemy/Tk1Enemy.hpp
         Enemy/Tk2Enemy.cpp

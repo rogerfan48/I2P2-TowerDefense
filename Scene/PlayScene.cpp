@@ -20,6 +20,7 @@
 #include "Turret/WizardTurret.hpp"
 #include "Turret/GunTurret.hpp"
 #include "Turret/Shovel.hpp"
+#include "Turret/Bomb.hpp"
 #include "UI/Animation/Plane.hpp"
 #include "Enemy/PlaneEnemy.hpp"
 #include "PlayScene.hpp"
@@ -296,6 +297,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 	else if (keyCode == ALLEGRO_KEY_R) UIBtnClicked(3);	// TODO: [CUSTOM-TURRET]: Make specific key to create the turret.
 	else if (keyCode == ALLEGRO_KEY_A) UIBtnClicked(4);
 	else if (keyCode == ALLEGRO_KEY_S) UIBtnClicked(5);
+	else if (keyCode == ALLEGRO_KEY_D) BombDamage();
 	else if (keyCode >= ALLEGRO_KEY_0 && keyCode <= ALLEGRO_KEY_9) {
 		// Hotkey for Speed up.
 		SpeedMult = keyCode - ALLEGRO_KEY_0;
@@ -422,6 +424,16 @@ void PlayScene::ConstructUI() {
 	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(Shovel::Price), "pirulen.ttf", 20, 1370 + 15, 270 + 62, 100, 100, 100));
 	UIGroup->AddNewObject(new Engine::Label("S", "pirulen.ttf", 24, 1370+2, 270+2, 255, 0, 0, 255, 0.5, 0.5));
 
+	btn = new TurretButton("play/floor.png", "play/dirt.png",
+		Engine::Sprite("play/Bomb.png", 1446, 270, 0, 0, 0, 0),
+		Engine::Sprite("play/Bomb.png", 1446, 270, 0, 0, 0, 0)
+		, 1446, 270, Bomb::Price);
+	
+	btn->SetOnClickCallback(std::bind(&PlayScene::BombDamage, this));
+	UIGroup->AddNewControlObject(btn);
+	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(Bomb::Price), "pirulen.ttf", 20, 1446 + 15, 270 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("D", "pirulen.ttf", 24, 1446+2, 270+2, 255, 0, 0, 255, 0.5, 0.5));
+
 	int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
 	int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
 	int shift = 135 + 25;
@@ -436,6 +448,18 @@ void PlayScene::ConstructUI() {
 	UIGroup->AddNewObject(new Engine::Label("Speed", "pirulen.ttf", 28, 1394, 760, 100, 100, 100));
 	UIGroup->AddNewObject(new Engine::Label("[0]",   "pirulen.ttf", 28, 1294, 790, 100, 100, 100));
 	UIGroup->AddNewObject(new Engine::Label("Stop",  "pirulen.ttf", 28, 1394, 790, 100, 100, 100));
+}
+
+void PlayScene::BombDamage() {
+	if (money < Bomb::Price) return;
+	money -= Bomb::Price;
+	UIMoney->Text = std::string("$") + std::to_string(this->money);
+	for (auto &it : EnemyGroup->GetObjects()) {
+		Enemy* enemy = dynamic_cast<Enemy*>(it);
+		if (!enemy->Visible) continue;
+		enemy->Hit(Bomb::Damage);
+		enemy->WizardOnExplode();
+	}
 }
 
 void PlayScene::UIBtnClicked(int id) {
