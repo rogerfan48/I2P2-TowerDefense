@@ -16,6 +16,7 @@
 #include "Engine/LOG.hpp"
 #include "Scene/PlayScene.hpp"
 #include "Turret/Turret.hpp"
+#include "Scene/ScoreboardScene.hpp"
 
 PlayScene* Enemy::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -45,6 +46,7 @@ void Enemy::Hit(float damage) {
 			it->Target = nullptr;
 		for (auto& it: lockedBullets)
 			it->Target = nullptr;
+		newRecord.score += static_cast<int>(path.size());
 		getPlayScene()->EarnMoney(money);
 		getPlayScene()->EnemyGroup->RemoveObject(objectIterator);
 		AudioHelper::PlayAudio("explosion.wav");
