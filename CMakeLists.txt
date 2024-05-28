@@ -96,6 +96,8 @@ add_executable(2024_I2P2_TowerDefense_with_answer
         Scene/ScoreboardScene.hpp
         Turret/WizardTurret.cpp
         Turret/WizardTurret.hpp
+        Turret/GunTurret.cpp
+        Turret/GunTurret.hpp
         Enemy/Tk1Enemy.cpp
         Enemy/Tk1Enemy.hpp
         Enemy/Tk2Enemy.cpp

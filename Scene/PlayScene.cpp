@@ -18,6 +18,7 @@
 #include "Turret/MachineGunTurret.hpp"
 #include "Turret/MissileTurret.hpp"
 #include "Turret/WizardTurret.hpp"
+#include "Turret/GunTurret.hpp"
 #include "UI/Animation/Plane.hpp"
 #include "Enemy/PlaneEnemy.hpp"
 #include "PlayScene.hpp"
@@ -278,6 +279,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 	else if (keyCode == ALLEGRO_KEY_W) UIBtnClicked(1);		// ? Hotkey for LaserTurret.
 	else if (keyCode == ALLEGRO_KEY_E) UIBtnClicked(2);		// ? Hotkey for MissileTurret.
 	else if (keyCode == ALLEGRO_KEY_R) UIBtnClicked(3);	// TODO: [CUSTOM-TURRET]: Make specific key to create the turret.
+	else if (keyCode == ALLEGRO_KEY_A) UIBtnClicked(4);
 	else if (keyCode >= ALLEGRO_KEY_0 && keyCode <= ALLEGRO_KEY_9) {
 		// Hotkey for Speed up.
 		SpeedMult = keyCode - ALLEGRO_KEY_0;
@@ -386,6 +388,15 @@ void PlayScene::ConstructUI() {
 	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(WizardTurret::Price), "pirulen.ttf", 20, 1522 - 4, 176 + 62, 100, 100, 100));
 	UIGroup->AddNewObject(new Engine::Label("R", "pirulen.ttf", 24, 1522+2, 176+2, 255, 0, 0, 255, 0.5, 0.5));
 
+	btn = new TurretButton("play/floor.png", "play/dirt.png",
+		Engine::Sprite("play/tower-base.png", 1294, 270, 0, 0, 0, 0),
+		Engine::Sprite("play/turret-6.png", 1294, 270, 0, 0, 0, 0)
+		, 1294, 270, GunTurret::Price);
+	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 4));
+	UIGroup->AddNewControlObject(btn);
+	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(GunTurret::Price), "pirulen.ttf", 20, 1294 + 2, 270 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("A", "pirulen.ttf", 24, 1294+2, 270+2, 255, 0, 0, 255, 0.5, 0.5));
+
 	int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
 	int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
 	int shift = 135 + 25;
@@ -414,6 +425,8 @@ void PlayScene::UIBtnClicked(int id) {
 		preview = new MissileTurret(0, 0);
 	else if (id == 3 && money >= WizardTurret::Price)
 		preview = new WizardTurret(0, 0);
+	else if (id == 4 && money >= GunTurret::Price)
+		preview = new GunTurret(0, 0);
 	if (!preview)
 		return;
 	preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();
