@@ -428,11 +428,16 @@ void PlayScene::ConstructUI() {
 		Engine::Sprite("play/Bomb.png", 1446, 270, 0, 0, 0, 0),
 		Engine::Sprite("play/Bomb.png", 1446, 270, 0, 0, 0, 0)
 		, 1446, 270, Bomb::Price);
-	
 	btn->SetOnClickCallback(std::bind(&PlayScene::BombDamage, this));
 	UIGroup->AddNewControlObject(btn);
 	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(Bomb::Price), "pirulen.ttf", 20, 1446 + 15, 270 + 62, 100, 100, 100));
 	UIGroup->AddNewObject(new Engine::Label("D", "pirulen.ttf", 24, 1446+2, 270+2, 255, 0, 0, 255, 0.5, 0.5));
+
+	UIGroup->AddNewObject(new Engine::Image("win/black.png", 1294-2.5, 620-2.5, 280+5, 60+5));
+	Engine::ImageButton* btnn = new Engine::ImageButton("win/dirt.png", "win/floor.png", 1294, 620, 280, 60);
+	btnn->SetOnClickCallback(std::bind(&PlayScene::Surrender, this));
+	UIGroup->AddNewControlObject(btnn);
+	UIGroup->AddNewObject(new Engine::Label("Surrender", "pirulen.ttf", 28, 1294 + 140, 620 + 30, 0, 0, 0, 255, 0.5, 0.5));
 
 	int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
 	int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
@@ -460,6 +465,9 @@ void PlayScene::BombDamage() {
 		enemy->Hit(Bomb::Damage);
 		enemy->WizardOnExplode();
 	}
+}
+void PlayScene::Surrender() {
+	Engine::GameEngine::GetInstance().ChangeScene("lose");
 }
 
 void PlayScene::UIBtnClicked(int id) {

@@ -82,5 +82,6 @@ public:
 	std::vector<std::vector<int>> CalculateBFSDistance();
 	// void ModifyReadMapTiles();
 	void BombDamage();
+	void Surrender();
 };
 #endif // PLAYSCENE_HPP
