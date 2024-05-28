@@ -287,6 +287,7 @@ int PlayScene::GetMoney() const {
 void PlayScene::EarnMoney(int money) {
 	this->money += money;
 	UIMoney->Text = std::string("$") + std::to_string(this->money);
+	UIScore->Text = std::string("Score: ") + std::to_string(newRecord.score);
 }
 void PlayScene::ReadMap() {
 	std::string filename = std::string("Resource/map") + std::to_string(MapId) + ".txt";
@@ -334,34 +335,38 @@ void PlayScene::ConstructUI() {
 	UIGroup->AddNewObject(new Engine::Image("play/sand.png", 1280, 0, 320, 832));
 	// Text
 	UIGroup->AddNewObject(new Engine::Label(std::string("Stage ") + std::to_string(MapId), "pirulen.ttf", 40, 1294, 0));
-	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::string("$") + std::to_string(money), "pirulen.ttf", 32, 1294, 48));
-	UIGroup->AddNewObject(UILives = new Engine::Label(std::string("Life ") + std::to_string(lives), "pirulen.ttf", 32, 1294, 88));
+	UIGroup->AddNewObject(UIScore = new Engine::Label(std::string("Score: ") + std::to_string(newRecord.score), "pirulen.ttf", 32, 1294, 48));
+	UIGroup->AddNewObject(UILives = new Engine::Label(std::string("Life: ") + std::to_string(lives), "pirulen.ttf", 32, 1294, 88));
+	UIGroup->AddNewObject(UIMoney = new Engine::Label(std::string("$") + std::to_string(money), "pirulen.ttf", 32, 1294, 128));
 	TurretButton* btn;
 	// Button 1
 	btn = new TurretButton("play/floor.png", "play/dirt.png",
-		Engine::Sprite("play/tower-base.png", 1294, 136, 0, 0, 0, 0),
-		Engine::Sprite("play/turret-1.png", 1294, 136 - 8, 0, 0, 0, 0)
-		, 1294, 136, MachineGunTurret::Price);
+		Engine::Sprite("play/tower-base.png", 1294, 176, 0, 0, 0, 0),
+		Engine::Sprite("play/turret-1.png", 1294, 176 - 8, 0, 0, 0, 0)
+		, 1294, 176, MachineGunTurret::Price);
 	// Reference: Class Member Function Pointer and std::bind.
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 0));
 	UIGroup->AddNewControlObject(btn);
-	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(MachineGunTurret::Price), "pirulen.ttf", 20, 1294 + 4, 136 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(MachineGunTurret::Price), "pirulen.ttf", 20, 1294 + 4, 176 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("Q", "pirulen.ttf", 24, 1294+2, 176+2, 255, 0, 0, 255, 0.5, 0.5));
 	// Button 2
 	btn = new TurretButton("play/floor.png", "play/dirt.png",
-		Engine::Sprite("play/tower-base.png", 1370, 136, 0, 0, 0, 0),
-		Engine::Sprite("play/turret-2.png", 1370, 136 - 8, 0, 0, 0, 0)
-		, 1370, 136, LaserTurret::Price);
+		Engine::Sprite("play/tower-base.png", 1370, 176, 0, 0, 0, 0),
+		Engine::Sprite("play/turret-2.png", 1370, 176 - 8, 0, 0, 0, 0)
+		, 1370, 176, LaserTurret::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 1));
 	UIGroup->AddNewControlObject(btn);
-	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(LaserTurret::Price), "pirulen.ttf", 20, 1370 - 4, 136 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(LaserTurret::Price), "pirulen.ttf", 20, 1370 - 4, 176 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("W", "pirulen.ttf", 24, 1370+2, 176+2, 255, 0, 0, 255, 0.5, 0.5));
 	// Button 3
 	btn = new TurretButton("play/floor.png", "play/dirt.png",
-		Engine::Sprite("play/tower-base.png", 1446, 136, 0, 0, 0, 0),
-		Engine::Sprite("play/turret-3.png", 1446, 136, 0, 0, 0, 0)
-		, 1446, 136, MissileTurret::Price);
+		Engine::Sprite("play/tower-base.png", 1446, 176, 0, 0, 0, 0),
+		Engine::Sprite("play/turret-3.png", 1446, 176, 0, 0, 0, 0)
+		, 1446, 176, MissileTurret::Price);
 	btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, 2));
 	UIGroup->AddNewControlObject(btn);
-	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(MissileTurret::Price), "pirulen.ttf", 20, 1446 - 4, 136 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("$" + std::to_string(MissileTurret::Price), "pirulen.ttf", 20, 1446 - 4, 176 + 62, 100, 100, 100));
+	UIGroup->AddNewObject(new Engine::Label("E", "pirulen.ttf", 24, 1446+2, 176+2, 255, 0, 0, 255, 0.5, 0.5));
 	// TODO: [CUSTOM-TURRET]: Create a button to support constructing the turret.
 	int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
 	int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
