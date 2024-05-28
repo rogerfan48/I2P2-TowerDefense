@@ -25,7 +25,7 @@ void WizardTurret::CreateBullet() {
 		if (!enemy->Visible) continue;
 		if (inRadius(enemy->Position)) {
 			enemy->Hit(Damage);
-			enemy->WizardOeExplode();
+			enemy->WizardOnExplode();
 		}
 	}
 }
