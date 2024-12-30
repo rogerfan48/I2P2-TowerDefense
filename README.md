@@ -14,8 +14,11 @@
   - Paginated scoreboard featuring 10 records per page with a maximum capacity of 20 records
 
 ### Project Deliverables
-- Some gaming images:
-  - TO BE ADDED
+- Gameplay Screenshot
+  - ![TowerDefense](Images/game.png)
+- Scoreboard Screenshot
+
+  - ![TowerDefense](Images/scoreboard.png)
 - Here are the steps to run the game (in macOS)(see [documentation/](https://github.com/rogerfan48/Project-Fresh1-I2P1-Pacman/blob/main/documentation) if using other OS):
   - Download Necessary Packages
     ```shell
