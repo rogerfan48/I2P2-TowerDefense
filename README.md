@@ -1,4 +1,4 @@
-## Project - Freshman 2 - Introduction to Programming 2 - Tower Defense
+## Project - Freshman Spring - Introduction to Programming II - Tower Defense
 - A tower defense game developed in C++ using the Allegro Library
 - Features:
   - Continuous enemy waves that players must defend against by strategically placing towers. Players lose one life point if enemies reach the bottom-right corner, and the game ends when life points reach zero.
