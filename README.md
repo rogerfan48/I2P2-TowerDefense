@@ -1,6 +1,7 @@
-## Project - Freshman Spring - Introduction to Programming II - Tower Defense
-- A tower defense game developed in C++ using the Allegro Library
-- Features:
+# Freshman (2024 Spring) Introduction to Programming II
+## Mini Project - Tower Defense
+- a tower defense game developed in C++ using the Allegro Library
+- features:
   - Continuous enemy waves that players must defend against by strategically placing towers. Players lose one life point if enemies reach the bottom-right corner, and the game ends when life points reach zero.
   - Score-based system where eliminating enemies earlier yields higher points (Score distribution can be viewed via the Debug button)
   - Multiple defensive options including:
@@ -12,6 +13,7 @@
   - Quick-access hotkeys for all towers and tools, marked with red letters in the top-left corner of each item
   - Local scoreboard system that persists between game sessions
   - Paginated scoreboard featuring 10 records per page with a maximum capacity of 20 records
+- `INFO:` coded and designed based on the template given from the TAs, not fully initiated by myself
 
 ### Project Deliverables
 - Gameplay Screenshot
@@ -34,5 +36,5 @@
     ```
 
 ### Others
-- the **coursework** of I2P2: [Course-Fresh2-I2P2](https://github.com/rogerfan48/Course-Fresh2-I2P2)
-- **Final Project** of I2P2: [Project-Fresh2-I2P2-ArenaLegends](https://github.com/rogerfan48/Project-Fresh2-I2P2-ArenaLegends)
+- the **coursework** of I2P2: [I2P2-Course](https://github.com/rogerfan48/I2P2-Course)
+- **Final Project** of I2P2: [I2P2-ArenaLegends](https://github.com/rogerfan48/I2P2-ArenaLegends)
